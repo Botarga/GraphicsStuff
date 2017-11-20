@@ -28,6 +28,10 @@
     <ClInclude Include="..\Commons\stb_image.h" />
     <ClInclude Include="..\Commons\Utils.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\camera.fs" />
+    <None Include="Shaders\camera.vs" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{606B4C90-272F-4A3B-A8EA-3C62A26E408A}</ProjectGuid>

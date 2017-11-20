@@ -27,7 +27,8 @@ public:
 			std::ifstream shaderFile(s.first);
 			std::string codeStr((std::istreambuf_iterator<char>(shaderFile)),
 				(std::istreambuf_iterator<char>()));
-			shaderIds[cont] = CompileShader(codeStr.c_str(), s.second);
+			const char* shaderCode = codeStr.c_str();
+			shaderIds[cont] = CompileShader(shaderCode, s.second);
 			glAttachShader(mId, shaderIds[cont++]);
 		}
 

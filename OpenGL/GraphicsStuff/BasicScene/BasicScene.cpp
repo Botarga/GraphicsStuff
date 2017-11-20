@@ -68,7 +68,7 @@ void resize_callback(GLFWwindow* window, int w, int h)
 
 void cursor_callback(GLFWwindow* window, double x, double y)
 {
-	//camera.process_mouse(deltaTime, x, y);
+	camera.proccess_mouse(deltaTime, x, y);
 }
 
 void proccessInput(GLFWwindow* window)
@@ -117,8 +117,8 @@ int main()
 
 	// Shaders
 	ShaderProgram triangle({ 
-		{ "..\\Project3\\Shaders\\camera.vs", GL_VERTEX_SHADER },
-		{ "..\\Project3\\Shaders\\camera.fs", GL_FRAGMENT_SHADER } 
+		{ "..\\BasicScene\\Shaders\\camera.vs", GL_VERTEX_SHADER },
+		{ "..\\BasicScene\\Shaders\\camera.fs", GL_FRAGMENT_SHADER } 
 	});
 
 	// Load textures
@@ -133,7 +133,7 @@ int main()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
 	int width, height, numChannels;
-	unsigned char* data = stbi_load("..\\Project3\\Textures\\Konata.png", &width, &height, &numChannels, 0);
+	unsigned char* data = stbi_load("..\\BasicScene\\Textures\\Konata.png", &width, &height, &numChannels, 0);
 	if (data) {
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 		glGenerateMipmap(GL_TEXTURE_2D);
@@ -148,7 +148,7 @@ int main()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
-	data = stbi_load("..\\Project3\\Textures\\water.jpg", &width, &height, &numChannels, 0);
+	data = stbi_load("..\\BasicScene\\Textures\\water.jpg", &width, &height, &numChannels, 0);
 	if (data) {
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
 		glGenerateMipmap(GL_TEXTURE_2D);

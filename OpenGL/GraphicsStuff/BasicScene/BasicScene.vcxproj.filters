@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{56a5d9c0-631c-4292-8bca-9d5e7403fba4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BasicScene.cpp">
@@ -35,5 +38,13 @@
     <ClInclude Include="..\Commons\Utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\camera.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\camera.vs">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>
