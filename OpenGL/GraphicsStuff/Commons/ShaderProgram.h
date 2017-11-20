@@ -9,6 +9,7 @@
 #include <utility>
 #include <sstream>
 #include <fstream>
+#include <iostream>
 
 class ShaderProgram
 {
@@ -91,5 +92,10 @@ public:
 	void SetMat4(const char* name, const glm::mat4& value)
 	{
 		glUniformMatrix4fv(glGetUniformLocation(mId, name), 1, false, glm::value_ptr(value));
+	}
+
+	void SetVec3(const char* name, const glm::vec3& value)
+	{
+		glUniform3fv(glGetUniformLocation(mId, name), 1, &value[0]);
 	}
 };
