@@ -2,6 +2,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <cmath>
+#include <iostream>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -9,7 +10,6 @@
 #include "stb_image.h"
 #include "Camera.h"
 #include "Utils.h"
-#include <iostream>
 
 constexpr int SCR_WIDTH = 800, SCR_HEIGHT = 600;
 GLFWwindow* window = nullptr;
@@ -68,7 +68,7 @@ void resize_callback(GLFWwindow* window, int w, int h)
 
 void cursor_callback(GLFWwindow* window, double x, double y)
 {
-	camera.process_mouse(deltaTime, x, y);
+	//camera.process_mouse(deltaTime, x, y);
 }
 
 void proccessInput(GLFWwindow* window)
@@ -157,9 +157,9 @@ int main()
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 	// bind to shaders
-	triangle.use();
-	triangle.setInt("texture1", 0);
-	triangle.setInt("texture2", 1);
+	triangle.Use();
+	triangle.SetInt("texture1", 0);
+	triangle.SetInt("texture2", 1);
 
 	// Store data
 	GLuint VAO, VBO, EBO;
@@ -186,8 +186,8 @@ int main()
 	glBindVertexArray(0);
 
 	projection = glm::perspective(glm::radians(fov), (float)(SCR_WIDTH / SCR_HEIGHT), 0.1f, 100.0f);
-	triangle.use();
-	triangle.setMat4("projection", projection);
+	triangle.Use();
+	triangle.SetMat4("projection", projection);
 	while (!glfwWindowShouldClose(window)) {
 		double currentTime = glfwGetTime();
 		deltaTime = currentTime - lastFrame;
@@ -204,10 +204,10 @@ int main()
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, waterTexture);
 
-		triangle.use();
+		triangle.Use();
 		glm::mat4 view;
 		view = camera.GetViewMatrix();
-		triangle.setMat4("view", view);
+		triangle.SetMat4("view", view);
 		
 		// Render
 		glBindVertexArray(VAO);
@@ -216,7 +216,7 @@ int main()
 			glm::mat4 model;
 			model = glm::translate(model, cubePositions[i]);
 			model = glm::rotate(model, float(glfwGetTime()), glm::vec3(0.3f, 0.5f, 0.7f));
-			triangle.setMat4("model", model);
+			triangle.SetMat4("model", model);
 
 			glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(unsigned int), GL_UNSIGNED_INT, 0);
 		}
