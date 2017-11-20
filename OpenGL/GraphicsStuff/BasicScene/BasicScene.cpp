@@ -2,6 +2,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <cmath>
+#include <ctime>
 #include <iostream>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -10,6 +11,7 @@
 #include "stb_image.h"
 #include "Camera.h"
 #include "Utils.h"
+#include "Texture.h"
 
 constexpr int SCR_WIDTH = 800, SCR_HEIGHT = 600;
 GLFWwindow* window = nullptr;
@@ -51,11 +53,7 @@ unsigned int indices[]{
 	1, 4, 5
 };
 
-glm::vec3 cubePositions[]{
-	glm::vec3(0.0f, 0.0f, 0.0f),
-	glm::vec3(0.0f,  2.0f, -3.0f),
-	glm::vec3(0.0f, 0.0f, 5.0f)
-};
+std::vector<glm::vec3> cubePositions; 
 
 glm::mat4 projection;
 float fov = 45.0f;
@@ -92,74 +90,43 @@ void proccessInput(GLFWwindow* window)
 		camera.proccess_input(Camera::MoveType::UP, deltaTime, sprint);
 	if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
 		camera.proccess_input(Camera::MoveType::DOWN, deltaTime, sprint);
+	if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS) {
+		cubePositions.push_back(glm::vec3(
+			rand() % 50 + (rand() % 100) / 100.0f,
+			rand() % 50 + (rand() % 100) / 100.0f,
+			rand() % 50 + (rand() % 100) / 100.0f
+		));
+	}
 }
 
 int main()
 {
-	glfwInit();
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	srand(time(0));
 
-	window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "title", nullptr, nullptr);
-	glfwMakeContextCurrent(window);
-	glfwSetFramebufferSizeCallback(window, resize_callback);
-	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-	glfwSetCursorPosCallback(window, cursor_callback);
+	cubePositions.push_back(glm::vec3(0.0f, 0.0f, 0.0f));
+	cubePositions.push_back(glm::vec3(0.0f, 2.0f, -3.0f));
+	cubePositions.push_back(glm::vec3(0.0f, 0.0f, 5.0f));
 
-	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-		return -1;
-
-	glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
+	window = initWindow(SCR_WIDTH, SCR_HEIGHT, "Basic scene", cursor_callback, resize_callback);
 
 	glClearColor(0.2f, 0.3f, 0.4f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_MULTISAMPLE);
 
 	// Shaders
-	ShaderProgram triangle({ 
+	ShaderProgram cubeProgram({ 
 		{ "..\\BasicScene\\Shaders\\camera.vs", GL_VERTEX_SHADER },
 		{ "..\\BasicScene\\Shaders\\camera.fs", GL_FRAGMENT_SHADER } 
 	});
 
 	// Load textures
-	GLuint konataTexture, waterTexture;
-	stbi_set_flip_vertically_on_load(true);
-	// Texture 1
-	glGenTextures(1, &konataTexture);
-	glBindTexture(GL_TEXTURE_2D, konataTexture);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-
-	int width, height, numChannels;
-	unsigned char* data = stbi_load("..\\BasicScene\\Textures\\Konata.png", &width, &height, &numChannels, 0);
-	if (data) {
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-		glGenerateMipmap(GL_TEXTURE_2D);
-		stbi_image_free(data);
-	}
-
-	// Texture 2
-	glGenTextures(1, &waterTexture);
-	glBindTexture(GL_TEXTURE_2D, waterTexture);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-
-	data = stbi_load("..\\BasicScene\\Textures\\water.jpg", &width, &height, &numChannels, 0);
-	if (data) {
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-		glGenerateMipmap(GL_TEXTURE_2D);
-		stbi_image_free(data);
-	}
-	glBindTexture(GL_TEXTURE_2D, 0);
+	Texture waterTexture("..\\BasicScene\\Textures\\water.jpg", GL_TEXTURE_2D, false);
+	Texture konataTexture("..\\BasicScene\\Textures\\konata.png", GL_TEXTURE_2D);
 
 	// bind to shaders
-	triangle.Use();
-	triangle.SetInt("texture1", 0);
-	triangle.SetInt("texture2", 1);
+	cubeProgram.Use();
+	cubeProgram.SetInt("texture1", 0);
+	cubeProgram.SetInt("texture2", 1);
 
 	// Store data
 	GLuint VAO, VBO, EBO;
@@ -186,8 +153,8 @@ int main()
 	glBindVertexArray(0);
 
 	projection = glm::perspective(glm::radians(fov), (float)(SCR_WIDTH / SCR_HEIGHT), 0.1f, 100.0f);
-	triangle.Use();
-	triangle.SetMat4("projection", projection);
+	cubeProgram.Use();
+	cubeProgram.SetMat4("projection", projection);
 	while (!glfwWindowShouldClose(window)) {
 		double currentTime = glfwGetTime();
 		deltaTime = currentTime - lastFrame;
@@ -200,23 +167,21 @@ int main()
 
 		// Bind textures
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, konataTexture);
+		konataTexture.Bind();
 		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, waterTexture);
+		waterTexture.Bind();
 
-		triangle.Use();
-		glm::mat4 view;
-		view = camera.GetViewMatrix();
-		triangle.SetMat4("view", view);
+		cubeProgram.Use();
+		cubeProgram.SetMat4("view", camera.GetViewMatrix());
 		
 		// Render
 		glBindVertexArray(VAO);
 		int nCubes = sizeof(cubePositions) / sizeof(glm::vec3);
-		for (int i = 0; i < nCubes; ++i) {
+		for (const auto& p : cubePositions) {
 			glm::mat4 model;
-			model = glm::translate(model, cubePositions[i]);
+			model = glm::translate(model, p);
 			model = glm::rotate(model, float(glfwGetTime()), glm::vec3(0.3f, 0.5f, 0.7f));
-			triangle.SetMat4("model", model);
+			cubeProgram.SetMat4("model", model);
 
 			glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(unsigned int), GL_UNSIGNED_INT, 0);
 		}
@@ -225,7 +190,9 @@ int main()
 		glfwSwapBuffers(window);
 	}
 
-
+	glDeleteVertexArrays(1, &VAO);
+	glDeleteBuffers(1, &EBO);
+	glDeleteBuffers(1, &VBO);
 	glfwDestroyWindow(window);
 	glfwTerminate();
 

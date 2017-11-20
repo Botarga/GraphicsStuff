@@ -26,6 +26,7 @@
     <ClInclude Include="..\Commons\Camera.h" />
     <ClInclude Include="..\Commons\ShaderProgram.h" />
     <ClInclude Include="..\Commons\stb_image.h" />
+    <ClInclude Include="..\Commons\Texture.h" />
     <ClInclude Include="..\Commons\Utils.h" />
   </ItemGroup>
   <ItemGroup>
