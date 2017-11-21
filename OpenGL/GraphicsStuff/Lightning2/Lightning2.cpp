@@ -1,4 +1,4 @@
-d#define STB_IMAGE_IMPLEMENTATION
+#define STB_IMAGE_IMPLEMENTATION
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
@@ -20,51 +20,51 @@ double lastFrame;
 
 glm::vec3 cubeColor(0.5f, 0.2f, 0.8f);
 glm::vec3 lampColor(1.0f, 1.0f, 1.0f);
+glm::vec3 lightPosition(0.0f, 2.0f, 0.0f);
 
 float vertices[] = {
-	-0.5f, -0.5f, -0.5f,
-	0.5f, -0.5f, -0.5f,
-	0.5f,  0.5f, -0.5f,
-	0.5f,  0.5f, -0.5f,
-	-0.5f,  0.5f, -0.5f,
-	-0.5f, -0.5f, -0.5f,
+	-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+	0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+	0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+	0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+	-0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+	-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
 
-	-0.5f, -0.5f,  0.5f,
-	0.5f, -0.5f,  0.5f,
-	0.5f,  0.5f,  0.5f,
-	0.5f,  0.5f,  0.5f,
-	-0.5f,  0.5f,  0.5f,
-	-0.5f, -0.5f,  0.5f,
+	-0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+	0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+	0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+	0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+	-0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+	-0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
 
-	-0.5f,  0.5f,  0.5f,
-	-0.5f,  0.5f, -0.5f,
-	-0.5f, -0.5f, -0.5f,
-	-0.5f, -0.5f, -0.5f,
-	-0.5f, -0.5f,  0.5f,
-	-0.5f,  0.5f,  0.5f,
+	-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+	-0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+	-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+	-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+	-0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+	-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
 
-	0.5f,  0.5f,  0.5f,
-	0.5f,  0.5f, -0.5f,
-	0.5f, -0.5f, -0.5f,
-	0.5f, -0.5f, -0.5f,
-	0.5f, -0.5f,  0.5f,
-	0.5f,  0.5f,  0.5f,
+	0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+	0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+	0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+	0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+	0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+	0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
 
-	-0.5f, -0.5f, -0.5f,
-	0.5f, -0.5f, -0.5f,
-	0.5f, -0.5f,  0.5f,
-	0.5f, -0.5f,  0.5f,
-	-0.5f, -0.5f,  0.5f,
-	-0.5f, -0.5f, -0.5f,
+	-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+	0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+	0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+	0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+	-0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+	-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
 
-	-0.5f,  0.5f, -0.5f,
-	0.5f,  0.5f, -0.5f,
-	0.5f,  0.5f,  0.5f,
-	0.5f,  0.5f,  0.5f,
-	-0.5f,  0.5f,  0.5f,
-	-0.5f,  0.5f, -0.5f,
+	-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+	0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+	0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+	0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+	-0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+	-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f
 };
-
 void resize_callback(GLFWwindow* window, int w, int h)
 {
 	glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
@@ -111,24 +111,35 @@ void proccess_input(GLFWwindow* window)
 	if (glfwGetKey(window, GLFW_KEY_6) == GLFW_PRESS)
 		lampColor[2] -= 0.01f;
 
-
+	if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS)
+		lightPosition.x -= 0.01f;
+	if (glfwGetKey(window, GLFW_KEY_I) == GLFW_PRESS)
+		lightPosition.z -= 0.01f;
+	if (glfwGetKey(window, GLFW_KEY_K) == GLFW_PRESS)
+		lightPosition.z += 0.01f;
+	if (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS)
+		lightPosition.x += 0.01f;
+	if (glfwGetKey(window, GLFW_KEY_U) == GLFW_PRESS)
+		lightPosition.y += 0.01f;
+	if (glfwGetKey(window, GLFW_KEY_O) == GLFW_PRESS)
+		lightPosition.y -= 0.01f;
 }
 
 int main()
 {
-	window = initWindow(SCR_WIDTH, SCR_HEIGHT, "Lightning 1", cursor_callback, resize_callback);
+	window = initWindow(SCR_WIDTH, SCR_HEIGHT, "Lightning 2", cursor_callback, resize_callback);
 
 	glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
 
 	ShaderProgram cubeProgram({
-		{"..\\Lightning1\\Shaders\\cube.vs", GL_VERTEX_SHADER},
-		{ "..\\Lightning1\\Shaders\\cube.fs", GL_FRAGMENT_SHADER },
+		{ "..\\Lightning2\\Shaders\\cube.vs", GL_VERTEX_SHADER },
+		{ "..\\Lightning2\\Shaders\\cube.fs", GL_FRAGMENT_SHADER },
 	});
 	ShaderProgram lampProgram({
-		{ "..\\Lightning1\\Shaders\\lamp.vs", GL_VERTEX_SHADER },
-		{ "..\\Lightning1\\Shaders\\lamp.fs", GL_FRAGMENT_SHADER },
+		{ "..\\Lightning2\\Shaders\\lamp.vs", GL_VERTEX_SHADER },
+		{ "..\\Lightning2\\Shaders\\lamp.fs", GL_FRAGMENT_SHADER },
 	});
 
 	// Store data
@@ -142,7 +153,9 @@ int main()
 		{
 			glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 			glEnableVertexAttribArray(0);
-			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
+			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), 0);
+			glEnableVertexAttribArray(1);
+			glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
 		}
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
@@ -161,7 +174,7 @@ int main()
 		lastFrame = currentFrame;
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		
+
 		glfwPollEvents();
 		proccess_input(window);
 
@@ -172,14 +185,15 @@ int main()
 
 		cubeProgram.SetMat4("view", camera.GetViewMatrix());
 		cubeProgram.SetMat4("model", model);
-		cubeProgram.SetVec3("vColor", cubeColor);
 		cubeProgram.SetVec3("lampColor", lampColor);
-		
+		cubeProgram.SetVec3("vertexColor", cubeColor);
+		cubeProgram.SetVec3("lightPos", lightPosition);
+
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
 		lampProgram.Use();
 		glm::mat4 lampModel;
-		lampModel = glm::translate(lampModel, glm::vec3(0.0f, 3.0f, 0.0f));
+		lampModel = glm::translate(lampModel, lightPosition);
 		lampModel = glm::scale(lampModel, glm::vec3(0.2f, 0.2f, 0.2f));
 		lampProgram.SetMat4("view", camera.GetViewMatrix());
 		lampProgram.SetMat4("model", lampModel);
