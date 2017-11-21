@@ -181,24 +181,25 @@ int main()
 		glBindVertexArray(VAO);
 		cubeProgram.Use();
 		glm::mat4 model;
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
-
+		
+		cubeProgram.SetMat4("projection", projection);
 		cubeProgram.SetMat4("view", camera.GetViewMatrix());
 		cubeProgram.SetMat4("model", model);
-		cubeProgram.SetVec3("lampColor", lampColor);
-		cubeProgram.SetVec3("vertexColor", cubeColor);
-		cubeProgram.SetVec3("lightPos", lightPosition);
-
+		cubeProgram.SetVec3("cubeColor", cubeColor);
+		cubeProgram.SetVec3("lightColor", lampColor);
+		cubeProgram.SetVec3("lightPosition", lightPosition);
+		cubeProgram.SetVec3("cameraPosition", camera.cameraPos);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
-
+		
 		lampProgram.Use();
-		glm::mat4 lampModel;
-		lampModel = glm::translate(lampModel, lightPosition);
-		lampModel = glm::scale(lampModel, glm::vec3(0.2f, 0.2f, 0.2f));
-		lampProgram.SetMat4("view", camera.GetViewMatrix());
-		lampProgram.SetMat4("model", lampModel);
-		lampProgram.SetVec3("vColor", lampColor);
+		glm::mat4 lightModel;
+		lightModel = glm::translate(lightModel, lightPosition);
+		lightModel = glm::scale(lightModel, glm::vec3(0.2f, 0.2f, 0.2f));
 
+		lampProgram.SetMat4("projection", projection);
+		lampProgram.SetMat4("view", camera.GetViewMatrix());
+		lampProgram.SetMat4("model", lightModel);
+		lampProgram.SetVec3("lightColor", lampColor);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
 

@@ -9,9 +9,6 @@ class Camera
 {
 private:
 	glm::mat4 viewMatrix;
-	glm::vec3 cameraPos;
-	glm::vec3 cameraFront;
-	glm::vec3 cameraUp;
 
 	float yaw, pitch;
 	double lastX, lastY;
@@ -20,6 +17,10 @@ private:
 	float sensitivity = 0.5f;
 
 public:
+	glm::vec3 cameraPos;
+	glm::vec3 cameraFront;
+	glm::vec3 cameraUp;
+
 	enum MoveType{FORWARD, BACKWARD, LEFT, RIGHT, UP, DOWN};
 
 	Camera(glm::vec3 front = glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3 pos = glm::vec3(0.0f, 0.0f, 3.0f),

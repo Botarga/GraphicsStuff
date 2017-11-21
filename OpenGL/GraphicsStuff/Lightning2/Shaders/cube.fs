@@ -1,23 +1,34 @@
 #version 330 core
 
-out vec4 fragColor;
 in vec3 vertexNormal;
-in vec3 fragPos;
+in vec3 vertexFragPosition;
 
-uniform vec3 lampColor;
-uniform vec3 vertexColor;
-uniform vec3 lightPos;
+out vec4 FragColor;
+
+uniform vec3 cubeColor;
+uniform vec3 lightColor;
+uniform vec3 lightPosition;
+uniform vec3 cameraPosition;
 
 void main()
 {
-	float ambientLight = 0.1;
-	vec3 ambient = ambientLight * lampColor;
-	
-	vec3 norm = normalize(vertexNormal);
-	vec3 lightDir = normalize(lightPos - fragPos);
-	float diff = max(dot(norm, lightDir), 0.0);
-	vec3 diffuse = diff * lampColor;
+	// Ambient
+	float ambientStrength = 0.1f;
+	vec3 ambient = ambientStrength * lightColor;
 
-	vec3 result = (ambient + diffuse) * vertexColor;
-	fragColor = vec4(result, 1.0);
+	// Difuse
+	vec3 Normal = normalize(vertexNormal);
+	vec3 lightDir = normalize(vertexFragPosition - lightPosition);
+	float diffuseFactor = max(dot(-lightDir, Normal), 0.0);
+	vec3 diffuse = diffuseFactor * lightColor;
+
+	// Specular
+	vec3 reflectDir = normalize(reflect(lightDir, Normal));
+	vec3 directionDir = normalize(cameraPosition - vertexFragPosition);
+
+	float specularFactor = pow(max(dot(reflectDir, directionDir), 0.0), 32);
+	vec3 specular = specularFactor * lightColor;
+
+	vec3 result = (ambient + diffuse + specular) * cubeColor; 
+	FragColor = vec4(result, 1.0);
 }
