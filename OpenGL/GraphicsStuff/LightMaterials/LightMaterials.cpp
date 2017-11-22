@@ -8,7 +8,7 @@
 #include "ShaderProgram.h"
 #include "Camera.h"
 #include "Utils.h"
-
+#include "Material.h"
 #include <iostream>
 #include <cstdint>
 
@@ -155,11 +155,7 @@ int main()
 	lightingShader.SetVec3("light.ambient", ambientColor);
 	lightingShader.SetVec3("light.diffuse", diffuseColor);
 	lightingShader.SetVec3("light.specular", glm::vec3(1.0f, 1.0f, 1.0f));
-	// material properties
-	lightingShader.SetVec3("material.ambient", glm::vec3(1.0f, 0.5f, 0.31f));
-	lightingShader.SetVec3("material.diffuse", glm::vec3(1.0f, 0.5f, 0.31f));
-	lightingShader.SetVec3("material.specular", glm::vec3(0.5f, 0.5f, 0.5f));
-	lightingShader.SetFloat("material.shininess", 32.0f);
+	
 	lightingShader.SetMat4("projection", projection);
 
 	lampShader.Use();
@@ -176,9 +172,28 @@ int main()
 		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		lightingShader.Use();
-		lightingShader.SetVec3("light.position", lightPos);
-		lightingShader.SetVec3("viewPos", camera.cameraPos);
+		
+		int row = 0, column = 0;
+		lightPos = glm::vec3(0.0f, 0.0f, 2.0f);
+		for (auto it = AllMaterials.begin(); it != AllMaterials.end(); ++it) {
+			
+			lightingShader.Use();
+			lightPos.x += column * 1.0f;
+			lightPos.y +=  
+			lightingShader.SetVec3("light.position", lightPos);
+			lightingShader.SetVec3("viewPos", camera.cameraPos);
+			
+			if (column == 5) {
+				column = 0;
+				row++;
+			}
+		}
+		// material properties
+		Material m = AllMaterials.at(MaterialName::CHROME);
+		lightingShader.SetVec3("material.ambient", m.ambient);
+		lightingShader.SetVec3("material.diffuse", m.diffuse);
+		lightingShader.SetVec3("material.specular", m.specular);
+		lightingShader.SetFloat("material.shininess", m.shininess);
 
 		// view/projection transformations
 		glm::mat4 view = camera.GetViewMatrix();
