@@ -107,4 +107,8 @@ public:
 	void SetFloat(const char* name, float value) {
 		glUniform1f(glGetUniformLocation(mId, name), value);
 	}
+
+	GLuint GetId() {
+		return mId;
+	}
 };
