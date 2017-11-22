@@ -169,51 +169,55 @@ int main()
 
 		proccess_input(window);
 
-		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+		glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		
 		int row = 0, column = 0;
-		lightPos = glm::vec3(0.0f, 0.0f, 2.0f);
 		for (auto it = AllMaterials.begin(); it != AllMaterials.end(); ++it) {
 			
 			lightingShader.Use();
-			lightPos.x += column * 1.0f;
-			lightPos.y +=  
+			lightPos.x = column * 2.0f;
+			lightPos.y = row * 2.0f;
 			lightingShader.SetVec3("light.position", lightPos);
 			lightingShader.SetVec3("viewPos", camera.cameraPos);
-			
+		
+			// material properties
+			Material m = it->second;
+			lightingShader.SetVec3("material.ambient", m.ambient);
+			lightingShader.SetVec3("material.diffuse", m.diffuse);
+			lightingShader.SetVec3("material.specular", m.specular);
+			lightingShader.SetFloat("material.shininess", m.shininess);
+
+			// view/projection transformations
+			glm::mat4 view = camera.GetViewMatrix();
+			lightingShader.SetMat4("view", view);
+
+			// world transformation
+			glm::mat4 model;
+			model = glm::translate(model, glm::vec3(column * 2.0f, row * 2.0f, 0.0f));
+			lightingShader.SetMat4("model", model);
+
+			glBindVertexArray(VAO);
+			glDrawArrays(GL_TRIANGLES, 0, 36);
+
+			lampShader.Use();
+			lampShader.SetMat4("view", view);
+			glm::mat4 lightModel = glm::mat4();
+			lightModel = glm::translate(lightModel, lightPos);
+			lightModel = glm::scale(lightModel, glm::vec3(0.2f)); // a smaller cube
+			lampShader.SetMat4("model", lightModel);
+
+			glDrawArrays(GL_TRIANGLES, 0, 36);
+
+
+			column++;
 			if (column == 5) {
 				column = 0;
 				row++;
 			}
 		}
-		// material properties
-		Material m = AllMaterials.at(MaterialName::CHROME);
-		lightingShader.SetVec3("material.ambient", m.ambient);
-		lightingShader.SetVec3("material.diffuse", m.diffuse);
-		lightingShader.SetVec3("material.specular", m.specular);
-		lightingShader.SetFloat("material.shininess", m.shininess);
 
-		// view/projection transformations
-		glm::mat4 view = camera.GetViewMatrix();
-		lightingShader.SetMat4("view", view);
-
-		// world transformation
-		glm::mat4 model;
-		lightingShader.SetMat4("model", model);
-
-		glBindVertexArray(VAO);
-		glDrawArrays(GL_TRIANGLES, 0, 36);
-
-		lampShader.Use();
-		lampShader.SetMat4("view", view);
-		model = glm::mat4();
-		model = glm::translate(model, lightPos);
-		model = glm::scale(model, glm::vec3(0.2f)); // a smaller cube
-		lampShader.SetMat4("model", model);
-
-		glDrawArrays(GL_TRIANGLES, 0, 36);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
