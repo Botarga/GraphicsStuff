@@ -98,4 +98,8 @@ public:
 	{
 		glUniform3fv(glGetUniformLocation(mId, name), 1, &value[0]);
 	}
+
+	void SetFloat(const char* name, float value) {
+		glUniform1f(glGetUniformLocation(mId, name), value);
+	}
 };

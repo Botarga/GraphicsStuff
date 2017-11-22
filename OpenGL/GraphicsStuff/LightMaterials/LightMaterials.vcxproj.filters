@@ -32,5 +32,19 @@
     <None Include="Shaders\cube.vs">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="Shaders\lamp.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\lamp.vs">
+      <Filter>Shaders</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Commons\Material.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Commons\ShaderProgram.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
