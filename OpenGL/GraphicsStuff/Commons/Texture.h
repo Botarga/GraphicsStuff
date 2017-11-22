@@ -1,6 +1,10 @@
 #pragma once
+#ifndef STB_IMAGE_IMPLEMENTATION
+#define STB_IMAGE_IMPLEMENTATION
+#endif
 #include <glad/glad.h>
 #include <cstdint>
+#include "stb_image.h"
 
 class Texture
 {

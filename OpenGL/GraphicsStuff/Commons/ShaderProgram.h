@@ -99,6 +99,11 @@ public:
 		glUniform3fv(glGetUniformLocation(mId, name), 1, &value[0]);
 	}
 
+	void SetVec3(const char* name, float v1, float v2, float v3) {
+		glm::vec3 v(v1, v2, v3);
+		SetVec3(name, v);
+	}
+
 	void SetFloat(const char* name, float value) {
 		glUniform1f(glGetUniformLocation(mId, name), value);
 	}
