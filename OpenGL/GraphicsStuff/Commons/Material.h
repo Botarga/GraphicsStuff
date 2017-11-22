@@ -45,20 +45,132 @@ static std::map<MaterialName, Material> AllMaterials = {
 			0.3f 
 		} 
 	},
-	{ MaterialName::PEARL,			{ glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), 0.0f } },
-	{ MaterialName::RUBY,			{ glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), 0.0f } },
-	{ MaterialName::TURQOISE,		{ glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), 0.0f } },
-	{ MaterialName::BRASS,			{ glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), 0.0f } },
-	{ MaterialName::BRONZE,			{ glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), 0.0f } },
-	{ MaterialName::CHROME,			{ glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), 0.0f } },
-	{ MaterialName::COOPER,			{ glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), 0.0f } },
-	{ MaterialName::GOLD,			{ glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), 0.0f } },
-	{ MaterialName::SILVER,			{ glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), 0.0f } },
-	{ MaterialName::BLACK_PLASTIC,	{ glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), 0.0f } },
-	{ MaterialName::CYAN_PLASTIC,	{ glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), 0.0f } },
-	{ MaterialName::GREEN_PLASTIC,	{ glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), 0.0f } },
-	{ MaterialName::RED_PLASTIC,	{ glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), 0.0f } },
-	{ MaterialName::WHITE_PLASTIC,	{ glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), 0.0f } },
+	{ 
+		MaterialName::PEARL,
+		{ 
+			glm::vec3(0.25f, 0.20725f, 0.1575f),
+			glm::vec3(1.0f, 0.829f, 0.829f),
+			glm::vec3(0.2996648f, 0.296648f, 0.296648f),
+			0.088f 
+		} 
+	},
+	{ 
+		MaterialName::RUBY,
+		{ 
+			glm::vec3(0.1745f, 0.01175f, 0.01175f),
+			glm::vec3(0.61424f, 0.04136f, 0.04136f),
+			glm::vec3(0.727811f, 0.626959f, 0.626959f),
+			0.6f 
+		} 
+	},
+	{
+		MaterialName::TURQOISE,
+		{
+			glm::vec3(0.0f, 0.0f, 0.0f),
+			glm::vec3(0.0f, 0.0f, 0.0f),
+			glm::vec3(0.0f, 0.0f, 0.0f),
+			0.0f 
+		} 
+	},
+	{
+		MaterialName::BRASS,
+		{ 
+			glm::vec3(0.0f, 0.0f, 0.0f),
+			glm::vec3(0.0f, 0.0f, 0.0f),
+			glm::vec3(0.0f, 0.0f, 0.0f),
+			0.0f 
+		} 
+	},
+	{ 
+		MaterialName::BRONZE,
+		{ 
+			glm::vec3(0.0f, 0.0f, 0.0f),
+			glm::vec3(0.0f, 0.0f, 0.0f),
+			glm::vec3(0.0f, 0.0f, 0.0f),
+			0.0f 
+		} 
+	},
+	{ 
+		MaterialName::CHROME,
+		{ 
+			glm::vec3(0.0f, 0.0f, 0.0f),
+			glm::vec3(0.0f, 0.0f, 0.0f),
+			glm::vec3(0.0f, 0.0f, 0.0f),
+			0.0f 
+		} 
+	},
+	{ 
+		MaterialName::COOPER,
+		{ 
+			glm::vec3(0.0f, 0.0f, 0.0f),
+			glm::vec3(0.0f, 0.0f, 0.0f),
+			glm::vec3(0.0f, 0.0f, 0.0f),
+			0.0f 
+		} 
+	},
+	{ 
+		MaterialName::GOLD,
+		{ 
+			glm::vec3(0.0f, 0.0f, 0.0f),
+			glm::vec3(0.0f, 0.0f, 0.0f),
+			glm::vec3(0.0f, 0.0f, 0.0f),
+			0.0f 
+		} 
+	},
+	{ 
+		MaterialName::SILVER,
+		{ 
+			glm::vec3(0.0f, 0.0f, 0.0f),
+			glm::vec3(0.0f, 0.0f, 0.0f),
+			glm::vec3(0.0f, 0.0f, 0.0f),
+			0.0f 
+		} 
+	},
+	{ 
+		MaterialName::BLACK_PLASTIC,
+		{ 
+			glm::vec3(0.0f, 0.0f, 0.0f),
+			glm::vec3(0.0f, 0.0f, 0.0f),
+			glm::vec3(0.0f, 0.0f, 0.0f),
+			0.0f 
+		} 
+	},
+	{ 
+		MaterialName::CYAN_PLASTIC,
+		{ 
+			glm::vec3(0.0f, 0.0f, 0.0f),
+			glm::vec3(0.0f, 0.0f, 0.0f),
+			glm::vec3(0.0f, 0.0f, 0.0f),
+			0.0f 
+		} 
+	},
+	{ 
+		MaterialName::GREEN_PLASTIC,
+		{ 
+			glm::vec3(0.0f, 0.0f, 0.0f),
+			glm::vec3(0.0f, 0.0f, 0.0f),
+			glm::vec3(0.0f, 0.0f, 0.0f),
+			0.0f 
+		} 
+	},
+	{ 
+		MaterialName::RED_PLASTIC,
+		{ 
+			glm::vec3(0.0f, 0.0f, 0.0f),
+			glm::vec3(0.0f, 0.0f, 0.0f),
+			glm::vec3(0.0f, 0.0f, 0.0f),
+			0.0f
+		} 
+	},
+	{ 
+		MaterialName::WHITE_PLASTIC,
+		{ 
+			glm::vec3(0.0f, 0.0f, 0.0f),
+			glm::vec3(0.0f, 0.0f, 0.0f),
+			glm::vec3(0.0f, 0.0f, 0.0f),
+			0.0f 
+		} 
+	},
 	{ MaterialName::YELLOW_PLASTIC,	{ glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), 0.0f } },
 	{ MaterialName::BLACK_RUBBER,	{ glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), 0.0f } },
 	{ MaterialName::CYAN_RUBBER,	{ glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), 0.0f } },
@@ -67,4 +179,3 @@ static std::map<MaterialName, Material> AllMaterials = {
 	{ MaterialName::WHITE_RUBBER,	{ glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), 0.0f } },
 	{ MaterialName::YELLOW_RUBBER,	{ glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), 0.0f } }
 };
-
