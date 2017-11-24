@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\botarga\Documents\assimpBuild\CMakeFiles\cba209b9a2e77cab720072433245bf53\INSTALL_force.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{A0534625-CAB3-3723-84C6-DE5752AF118D}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

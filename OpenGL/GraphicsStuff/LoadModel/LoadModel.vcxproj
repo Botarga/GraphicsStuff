@@ -75,11 +75,11 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Program Files\Assimp\include;C:\repos\GraphicsStuff\OpenGL\GraphicsStuff\libs\glm-0.9.8.5;C:\repos\GraphicsStuff\OpenGL\GraphicsStuff\libs\glfw-3.2.1.bin.WIN32\include;C:\repos\GraphicsStuff\OpenGL\GraphicsStuff\libs\glad\include;C:\repos\GraphicsStuff\OpenGL\GraphicsStuff\Commons;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\repos\GraphicsStuff\OpenGL\GraphicsStuff\libs\assimpBuild\include;C:\repos\GraphicsStuff\OpenGL\GraphicsStuff\libs\glm-0.9.8.5;C:\repos\GraphicsStuff\OpenGL\GraphicsStuff\libs\glfw-3.2.1.bin.WIN32\include;C:\repos\GraphicsStuff\OpenGL\GraphicsStuff\libs\glad\include;C:\repos\GraphicsStuff\OpenGL\GraphicsStuff\Commons;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\Program Files\Assimp\lib\x86;C:\repos\GraphicsStuff\OpenGL\GraphicsStuff\libs\glfw-3.2.1.bin.WIN32\lib-vc2015;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glfw3.lib;assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\repos\GraphicsStuff\OpenGL\GraphicsStuff\libs\assimpBuild\code\Debug;C:\repos\GraphicsStuff\OpenGL\GraphicsStuff\libs\glfw-3.2.1.bin.WIN32\lib-vc2015;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
