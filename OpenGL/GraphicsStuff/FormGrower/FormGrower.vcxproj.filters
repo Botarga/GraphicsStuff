@@ -14,7 +14,7 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
     <Filter Include="Shaders">
-      <UniqueIdentifier>{819ee9ce-5ef4-4d11-a119-0f6e16d831a3}</UniqueIdentifier>
+      <UniqueIdentifier>{78255814-078b-4110-8337-63ad0bb56d18}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -26,10 +26,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Shaders\form..vs">
+    <None Include="Shaders\shader.fs">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="Shaders\form.fs">
+    <None Include="Shaders\shader.vs">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>

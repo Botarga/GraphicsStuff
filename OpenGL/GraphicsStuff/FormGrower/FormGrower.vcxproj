@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -20,9 +20,9 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{19882261-ADBB-468A-BD07-CCC39F861872}</ProjectGuid>
+    <ProjectGuid>{E63CFD17-3D11-4420-9FAB-8710C4FD9E4E}</ProjectGuid>
     <RootNamespace>FormGrower</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -75,11 +75,11 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\repos\GraphicsStuff\OpenGL\GraphicsStuff\libs\glm-0.9.8.5;C:\repos\GraphicsStuff\OpenGL\GraphicsStuff\libs\glad\include;C:\repos\GraphicsStuff\OpenGL\GraphicsStuff\libs\glfw-3.2.1.bin.WIN32\include;C:\repos\GraphicsStuff\OpenGL\GraphicsStuff\Commons;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\repos\GraphicsStuff\OpenGL\GraphicsStuff\libs\glm-0.9.8.5;C:\repos\GraphicsStuff\OpenGL\GraphicsStuff\libs\glfw-3.2.1.bin.WIN32\include;C:\repos\GraphicsStuff\OpenGL\GraphicsStuff\libs\glad\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>opengl32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>C:\repos\GraphicsStuff\OpenGL\GraphicsStuff\libs\glfw-3.2.1.bin.WIN32\lib-vc2015;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -120,8 +120,8 @@
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Shaders\form..vs" />
-    <None Include="Shaders\form.fs" />
+    <None Include="Shaders\shader.fs" />
+    <None Include="Shaders\shader.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
