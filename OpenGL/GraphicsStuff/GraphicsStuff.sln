@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.16
+VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lightning1", "Lightning1\Lightning1.vcxproj", "{98434F71-5743-4680-9079-E377113804F8}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LightMaps", "LightMaps\LightMaps.vcxproj", "{8826C264-3B51-460C-8261-B026A2ED4DD7}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LoadModel", "LoadModel\LoadModel.vcxproj", "{D4EB1F99-09E0-43D8-85F8-E8F7C6337085}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FormGrower", "FormGrower\FormGrower.vcxproj", "{19882261-ADBB-468A-BD07-CCC39F861872}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,8 +73,19 @@ Global
 		{D4EB1F99-09E0-43D8-85F8-E8F7C6337085}.Release|x64.Build.0 = Release|x64
 		{D4EB1F99-09E0-43D8-85F8-E8F7C6337085}.Release|x86.ActiveCfg = Release|Win32
 		{D4EB1F99-09E0-43D8-85F8-E8F7C6337085}.Release|x86.Build.0 = Release|Win32
+		{19882261-ADBB-468A-BD07-CCC39F861872}.Debug|x64.ActiveCfg = Debug|x64
+		{19882261-ADBB-468A-BD07-CCC39F861872}.Debug|x64.Build.0 = Debug|x64
+		{19882261-ADBB-468A-BD07-CCC39F861872}.Debug|x86.ActiveCfg = Debug|Win32
+		{19882261-ADBB-468A-BD07-CCC39F861872}.Debug|x86.Build.0 = Debug|Win32
+		{19882261-ADBB-468A-BD07-CCC39F861872}.Release|x64.ActiveCfg = Release|x64
+		{19882261-ADBB-468A-BD07-CCC39F861872}.Release|x64.Build.0 = Release|x64
+		{19882261-ADBB-468A-BD07-CCC39F861872}.Release|x86.ActiveCfg = Release|Win32
+		{19882261-ADBB-468A-BD07-CCC39F861872}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A006D007-156B-4887-8EBD-9DB6B951D7DF}
 	EndGlobalSection
 EndGlobal
