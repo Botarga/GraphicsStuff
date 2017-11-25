@@ -43,7 +43,8 @@ int main()
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	//glfwWindowHint(GLFW_SAMPLES, 4);
+
+	glfwWindowHint(GLFW_SAMPLES, 4);
 
 #ifdef __APPLE__
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // uncomment this statement to fix compilation on OS X
@@ -82,6 +83,7 @@ int main()
 		{"..\\LoadModel\\Shaders\\model.fs", GL_FRAGMENT_SHADER}
 	});
 	
+
 	//Model ourModel("..\\LoadModel\\objects\\model1\\Blonde Elexis - nude.obj");
 	//Model ourModel("..\\LoadModel\\objects\\miku1\\aaa.obj");
 	Model ourModel("..\\LoadModel\\objects\\elf-girl\\Elf01_posed.obj");
@@ -116,7 +118,8 @@ int main()
 		// render the loaded model
 		glm::mat4 model;
 		model = glm::translate(model, glm::vec3(0.0f, -1.75f, 0.0f)); // translate it down so it's at the center of the scene
-		model = glm::scale(model, glm::vec3(0.2f, factorY, 0.2f));	// it's a bit too big for our scene, so scale it down
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));	// it's a bit too big for our scene, so scale it down
+
 		ourShader.SetMat4("model", model);
 		ourModel.Draw(ourShader);
 		//ourModel2.Draw(ourShader);
