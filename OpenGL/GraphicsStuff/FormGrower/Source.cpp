@@ -10,7 +10,7 @@
 #include <cmath>
 #include <ctime>
 
-constexpr int WIDTH = 1366, HEIGHT = 768;
+constexpr int WIDTH = 1280, HEIGHT = 720;
 GLFWwindow* window = nullptr;
 
 glm::vec3 cameraPos(0.0f, 0.0f, 3.0f);
@@ -48,9 +48,9 @@ void proccess_input(GLFWwindow* window) {
 		colors[numVertexDraw * 3 + 2] = (float)(rand() % 101 * 0.01f);
 
 		glBindBuffer(GL_ARRAY_BUFFER, VBO);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
+		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
 		glBindBuffer(GL_ARRAY_BUFFER, colorVBO);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(colors), colors, GL_DYNAMIC_DRAW);
+		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(colors), colors);
 
 		numVertexDraw++;
 	}
