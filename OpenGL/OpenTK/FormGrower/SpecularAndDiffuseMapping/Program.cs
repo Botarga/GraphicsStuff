@@ -5,62 +5,57 @@ using OpenTK.Graphics.OpenGL;
 using System.Collections.Generic;
 using OpenTK.Input;
 using GraphicUtils;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace SpecularAndDiffuseMapping
 {
     class MyGame : GameWindow
     {
-        float[] vertices = new float[]
-        {
-            // Back
-            -0.5f, 0.5f, -0.5f,     0.0f, 0.0f, -1.0f,
-            0.5f, 0.5f, -0.5f,      0.0f, 0.0f, -1.0f,
-            -0.5f, -0.5f, -0.5f,    0.0f, 0.0f, -1.0f,
-            0.5f, 0.5f, -0.5f,      0.0f, 0.0f, -1.0f,
-            -0.5f, -0.5f, -0.5f,    0.0f, 0.0f, -1.0f,
-            0.5f, -0.5f, -0.5f,     0.0f, 0.0f, -1.0f,
+        float[] vertices = new float[]{
+            // positions          // normals           // texture coords
+            -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 0.0f,
+             0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 0.0f,
+             0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 1.0f,
+             0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 1.0f,
+            -0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 1.0f,
+            -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 0.0f,
 
-            // Front
-            -0.5f, 0.5f, 0.5f,      0.0f, 0.0f, 1.0f,
-            0.5f, 0.5f, 0.5f,       0.0f, 0.0f, 1.0f,
-            -0.5f, -0.5f, 0.5f,     0.0f, 0.0f, 1.0f,
-            0.5f, 0.5f, 0.5f,       0.0f, 0.0f, 1.0f,
-            -0.5f, -0.5f, 0.5f,     0.0f, 0.0f, 1.0f,
-            0.5f, -0.5f, 0.5f,      0.0f, 0.0f, 1.0f,
+            -0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   0.0f, 0.0f,
+             0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   1.0f, 0.0f,
+             0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   1.0f, 1.0f,
+             0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   1.0f, 1.0f,
+            -0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   0.0f, 1.0f,
+            -0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   0.0f, 0.0f,
 
-            // Left
-            -0.5f, 0.5f, -0.5f,     -1.0f, 0.0f, 0.0f,
-            -0.5f, 0.5f, 0.5f,      -1.0f, 0.0f, 0.0f,
-            -0.5f, -0.5f, -0.5f,    -1.0f, 0.0f, 0.0f,
-            -0.5f, 0.5f, 0.5f,      -1.0f, 0.0f, 0.0f,
-            -0.5f, -0.5f, -0.5f,    -1.0f, 0.0f, 0.0f,
-            -0.5f, -0.5f, 0.5f,     -1.0f, 0.0f, 0.0f,
+            -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
+            -0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  1.0f, 1.0f,
+            -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
+            -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
+            -0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  0.0f, 0.0f,
+            -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
 
-            // Right
-             0.5f, 0.5f, -0.5f,     1.0f, 0.0f, 0.0f,
-             0.5f, 0.5f, 0.5f,      1.0f, 0.0f, 0.0f,
-             0.5f, -0.5f, -0.5f,    1.0f, 0.0f, 0.0f,
-             0.5f, 0.5f, 0.5f,      1.0f, 0.0f, 0.0f,
-             0.5f, -0.5f, -0.5f,    1.0f, 0.0f, 0.0f,
-             0.5f, -0.5f, 0.5f,     1.0f, 0.0f, 0.0f,
+             0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
+             0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  1.0f, 1.0f,
+             0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
+             0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
+             0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  0.0f, 0.0f,
+             0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
 
-            // Top
-            -0.5f, 0.5f, -0.5f,     0.0f, 1.0f, 0.0f,
-            0.5f, 0.5f, -0.5f,      0.0f, 1.0f, 0.0f,
-            -0.5f, 0.5f, 0.5f,      0.0f, 1.0f, 0.0f,
-            0.5f, 0.5f, -0.5f,      0.0f, 1.0f, 0.0f,
-            -0.5f, 0.5f, 0.5f,      0.0f, 1.0f, 0.0f,
-            0.5f, 0.5f, 0.5f,       0.0f, 1.0f, 0.0f,
-                
-            // Bottom
-            -0.5f, -0.5f, -0.5f,    0.0f, -1.0f, 0.0f,
-            0.5f, -0.5f, -0.5f,     0.0f, -1.0f, 0.0f,
-            -0.5f, -0.5f, 0.5f,     0.0f, -1.0f, 0.0f,
-            0.5f, -0.5f, -0.5f,     0.0f, -1.0f, 0.0f,
-            -0.5f, -0.5f, 0.5f,     0.0f, -1.0f, 0.0f,
-            0.5f, -0.5f, 0.5f,      0.0f, -1.0f, 0.0f
+            -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f, 1.0f,
+             0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  1.0f, 1.0f,
+             0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f, 0.0f,
+             0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f, 0.0f,
+            -0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  0.0f, 0.0f,
+            -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f, 1.0f,
+
+            -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 1.0f,
+             0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 1.0f,
+             0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 0.0f,
+             0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 0.0f,
+            -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 0.0f,
+            -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 1.0f
         };
-
 
         int VAO, VBO;
         double deltaTime;
@@ -72,17 +67,10 @@ namespace SpecularAndDiffuseMapping
         Camera cam = new Camera();
         int program;
         int lightShader;
+        int cubeTexture;
 
         public MyGame(int width, int height) : base(width, height, new OpenTK.Graphics.GraphicsMode(32, 24, 0, 4))
         {
-            program = LoadProgram(new List<Tuple<string, ShaderType>> {
-                new Tuple<string, ShaderType>( @"..\..\shaders\cube.vs", ShaderType.VertexShader),
-                new Tuple<string, ShaderType>( @"..\..\shaders\cube.fs", ShaderType.FragmentShader),
-            });
-            lightShader = LoadProgram(new List<Tuple<string, ShaderType>> {
-                new Tuple<string, ShaderType>( @"..\..\shaders\lamp.vs", ShaderType.VertexShader),
-                new Tuple<string, ShaderType>( @"..\..\shaders\lamp.fs", ShaderType.FragmentShader),
-            });
         }
 
         protected override void OnRenderFrame(FrameEventArgs e)
@@ -100,68 +88,51 @@ namespace SpecularAndDiffuseMapping
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            Matrix4 view = cam.GetViewMatrix();
-            Matrix4 projection = cam.GetProjectionMatrix();
-
-            GL.BindVertexArray(VAO);
-            Material[] ms = new Material[] {
-                Material.AllMaterials[Material.MaterialName.GOLD],
-                Material.AllMaterials[Material.MaterialName.GOLD]
-            };
-
-            Vector3 auxLightPosition = lightPosition;
-
-            int row = 0, column = 0;
-            foreach (KeyValuePair<Material.MaterialName, Material> m in Material.AllMaterials)
+            Matrix4 model, view, projection;
+            GL.UseProgram(program);
             {
-                auxLightPosition = lightPosition;
-                GL.UseProgram(program);
-                {
-                    // Matrix data
-                    Matrix4 model = Matrix4.CreateTranslation(column * 2.0f, row * 2.0f, 0.0f);
-                    auxLightPosition = new Vector3(auxLightPosition.X + column * 2.0f, auxLightPosition.Y + row * 2.0f, auxLightPosition.Z);
-                    GL.UniformMatrix4(GL.GetUniformLocation(program, "model"), false, ref model);
-                    GL.UniformMatrix4(GL.GetUniformLocation(program, "view"), false, ref view);
-                    GL.UniformMatrix4(GL.GetUniformLocation(program, "projection"), false, ref projection);
+                model = Matrix4.Identity;
+                view = cam.GetViewMatrix();
+                projection = cam.GetProjectionMatrix();
 
-                    // Material data
-                    Material mat = m.Value;
-                    GL.Uniform3(GL.GetUniformLocation(program, "material.ambient"), mat.Ambient);
-                    GL.Uniform3(GL.GetUniformLocation(program, "material.diffuse"), mat.Diffuse);
-                    GL.Uniform3(GL.GetUniformLocation(program, "material.specular"), mat.Specular);
-                    GL.Uniform1(GL.GetUniformLocation(program, "material.shininess"), mat.Shininess);
+                // Matrix dat
+                GL.UniformMatrix4(GL.GetUniformLocation(program, "model"), false, ref model);
+                GL.UniformMatrix4(GL.GetUniformLocation(program, "view"), false, ref view);
+                GL.UniformMatrix4(GL.GetUniformLocation(program, "projection"), false, ref projection);
 
-                    // Light data
-                    GL.Uniform3(GL.GetUniformLocation(program, "light.position"), auxLightPosition);
-                    GL.Uniform3(GL.GetUniformLocation(program, "light.ambient"), new Vector3(0.2f));
-                    GL.Uniform3(GL.GetUniformLocation(program, "light.diffuse"), new Vector3(0.5f));
-                    GL.Uniform3(GL.GetUniformLocation(program, "light.specular"), new Vector3(1.0f));
+            }
+            GL.UseProgram(lightShader);
+            {
 
-                    // Other
-                    GL.Uniform3(GL.GetUniformLocation(program, "viewPos"), cam.Position);
-                }
-                GL.DrawArrays(PrimitiveType.Triangles, 0, vertices.Length);
-
-                GL.UseProgram(lightShader);
-                {
-                    // Matrix data
-                    Matrix4 lightModel = Matrix4.CreateScale(0.2f) * Matrix4.CreateTranslation(auxLightPosition);
-                    GL.UniformMatrix4(GL.GetUniformLocation(lightShader, "model"), false, ref lightModel);
-                    GL.UniformMatrix4(GL.GetUniformLocation(lightShader, "view"), false, ref view);
-                    GL.UniformMatrix4(GL.GetUniformLocation(lightShader, "projection"), false, ref projection);
-
-                    GL.DrawArrays(PrimitiveType.Triangles, 0, vertices.Length);
-                }
-
-                ++column;
-                if (column == 5)
-                {
-                    ++row;
-                    column = 0;
-                }
             }
 
             SwapBuffers();
+        }
+
+        public int LoadTexture(string file)
+        {
+            Bitmap bitmap = new Bitmap(file);
+
+            int tex;
+            GL.Hint(HintTarget.PerspectiveCorrectionHint, HintMode.Nicest);
+
+            GL.GenTextures(1, out tex);
+            GL.BindTexture(TextureTarget.Texture2D, tex);
+
+            BitmapData data = bitmap.LockBits(new System.Drawing.Rectangle(0, 0, bitmap.Width, bitmap.Height),
+                ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
+            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, data.Width, data.Height, 0,
+                OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, data.Scan0);
+            bitmap.UnlockBits(data);
+
+
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)TextureWrapMode.Repeat);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.Repeat);
+
+            return tex;
         }
 
         private void ProccessInput()
@@ -203,6 +174,15 @@ namespace SpecularAndDiffuseMapping
             GL.Enable(EnableCap.DepthTest);
             CursorVisible = false;
 
+            program = LoadProgram(new List<Tuple<string, ShaderType>> {
+                new Tuple<string, ShaderType>( @"..\..\shaders\cube.vs", ShaderType.VertexShader),
+                new Tuple<string, ShaderType>( @"..\..\shaders\cube.fs", ShaderType.FragmentShader),
+            });
+            lightShader = LoadProgram(new List<Tuple<string, ShaderType>> {
+                new Tuple<string, ShaderType>( @"..\..\shaders\lamp.vs", ShaderType.VertexShader),
+                new Tuple<string, ShaderType>( @"..\..\shaders\lamp.fs", ShaderType.FragmentShader),
+            });
+
             VAO = GL.GenVertexArray();
             VBO = GL.GenBuffer();
 
@@ -214,12 +194,20 @@ namespace SpecularAndDiffuseMapping
                     GL.BufferData(BufferTarget.ArrayBuffer, vertices.Length * sizeof(float),
                         vertices, BufferUsageHint.StaticDraw);
                     GL.EnableVertexAttribArray(0);
-                    GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 6 * sizeof(float), 0);
+                    GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 8 * sizeof(float), 0);
                     GL.EnableVertexAttribArray(1);
-                    GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, false, 6 * sizeof(float), 3 * sizeof(float));
+                    GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, false, 8 * sizeof(float), 3 * sizeof(float));
+                    GL.EnableVertexAttribArray(2);
+                    GL.VertexAttribPointer(2, 2, VertexAttribPointerType.Float, false, 8 * sizeof(float), 6 * sizeof(float));
+
                 }
             }
             GL.BindVertexArray(0);
+
+            cubeTexture = LoadTexture("..\\..\\textures\\container2.png");
+            GL.UseProgram(program);
+            GL.Uniform1(GL.GetUniformLocation(program, "material.diffuse"), 0);
+
         }
 
 
@@ -254,6 +242,7 @@ namespace SpecularAndDiffuseMapping
                 GL.DeleteShader(id);
             }
 
+            
             return result;
         }
 
