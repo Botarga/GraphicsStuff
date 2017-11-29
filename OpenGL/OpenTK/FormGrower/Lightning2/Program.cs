@@ -100,54 +100,41 @@ namespace Lightning2
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
+            Matrix4 view = cam.GetViewMatrix();
+            Matrix4 projection = cam.GetProjectionMatrix();
+
             GL.BindVertexArray(VAO);
-            
-            int row = 0, column = 0;
-            foreach(KeyValuePair<Material.MaterialName, Material> m in Material.AllMaterials)
+            GL.UseProgram(program);
             {
-                GL.UseProgram(program);
-                lightPosition.X = column * 2.0f;
-                lightPosition.Y = row * 2.0f;
-                lightPosition.Z = 2.0f;
-                GL.Uniform3(GL.GetUniformLocation(program, "light.position"), lightPosition);
-                GL.Uniform3(GL.GetUniformLocation(program, "camPosition"), cam.Position);
-
-                // Material properties
-                GL.Uniform3(GL.GetUniformLocation(program, "material.ambient"), m.Value.Ambient);
-                GL.Uniform3(GL.GetUniformLocation(program, "material.diffuse"), m.Value.Diffuse);
-                GL.Uniform3(GL.GetUniformLocation(program, "material.specular"), m.Value.Specular);
-                GL.Uniform1(GL.GetUniformLocation(program, "material.shininess"), m.Value.Shininess);
-
-                // View projeciton
-                Matrix4 view = cam.GetViewMatrix();
-                GL.UniformMatrix4(GL.GetUniformLocation(program, "view"), false, ref view);
-                Matrix4 projection = cam.GetProjectionMatrix();
-                GL.UniformMatrix4(GL.GetUniformLocation(program, "projection"), false, ref projection);
-                Matrix4 model = Matrix4.CreateTranslation(new Vector3(column * 2, row * 2, 0.0f));
+                // Matrix data
+                Matrix4 model = Matrix4.Identity;
                 GL.UniformMatrix4(GL.GetUniformLocation(program, "model"), false, ref model);
+                GL.UniformMatrix4(GL.GetUniformLocation(program, "view"), false, ref view);
+                GL.UniformMatrix4(GL.GetUniformLocation(program, "projection"), false, ref projection);
 
+                // Material data
+                Material mat = Material.AllMaterials[Material.MaterialName.GOLD];
+                GL.Uniform3(GL.GetUniformLocation(program, "material.ambient"), mat.Ambient);
+                GL.Uniform3(GL.GetUniformLocation(program, "material.diffuse"), mat.Diffuse);
+                GL.Uniform3(GL.GetUniformLocation(program, "material.specular"), mat.Specular);
+                GL.Uniform1(GL.GetUniformLocation(program, "material.shininess"), mat.Shininess);
+
+                // Light data
+                GL.Uniform3(GL.GetUniformLocation(program, "light.position"), lightPosition);
                 GL.Uniform3(GL.GetUniformLocation(program, "light.ambient"), new Vector3(0.2f));
                 GL.Uniform3(GL.GetUniformLocation(program, "light.diffuse"), new Vector3(0.5f));
                 GL.Uniform3(GL.GetUniformLocation(program, "light.specular"), new Vector3(1.0f));
 
-
-                GL.DrawArrays(PrimitiveType.Triangles, 0, vertices.Length);
-
-                GL.UseProgram(lightShader);
-                model = Matrix4.CreateScale(0.2f) * Matrix4.CreateTranslation(lightPosition);
-
-                GL.UniformMatrix4(GL.GetUniformLocation(lightShader, "model"), false, ref model);
-                GL.UniformMatrix4(GL.GetUniformLocation(lightShader, "view"), false, ref view);
-                GL.UniformMatrix4(GL.GetUniformLocation(lightShader, "projection"), false, ref projection);
-                GL.DrawArrays(PrimitiveType.Triangles, 0, vertices.Length);
-
-                ++column;
-                if(column == 5)
-                {
-                    ++row;
-                    column = 0;
-                }
+                // Other
+                GL.Uniform3(GL.GetUniformLocation(program, "camPosition"), cam.Position);
             }
+            GL.DrawArrays(PrimitiveType.Triangles, 0, vertices.Length);
+
+            GL.UseProgram(lightShader);
+            {
+
+            }
+            
 
 
             SwapBuffers();
