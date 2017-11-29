@@ -4,12 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{327F3DFC-EFD2-47E5-B676-D9CC9B5F4C92}</ProjectGuid>
+    <ProjectGuid>{11B2A880-CE3C-4445-B05D-6D877BBF2510}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>SpecularAndDiffuseMapping</RootNamespace>
-    <AssemblyName>SpecularAndDiffuseMapping</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <RootNamespace>LoadTexture</RootNamespace>
+    <AssemblyName>LoadTexture</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -54,8 +55,6 @@
     <None Include="packages.config" />
     <None Include="Shaders\cube.fs" />
     <None Include="Shaders\cube.vs" />
-    <None Include="Shaders\lamp.fs" />
-    <None Include="Shaders\lamp.vs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\GraphicUtils\GraphicUtils.csproj">
@@ -63,6 +62,5 @@
       <Name>GraphicUtils</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
