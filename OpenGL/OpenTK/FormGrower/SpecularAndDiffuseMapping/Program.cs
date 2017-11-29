@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using OpenTK.Input;
 using GraphicUtils;
 
-namespace Lightning2
+namespace SpecularAndDiffuseMapping
 {
     class MyGame : GameWindow
     {
@@ -112,7 +112,8 @@ namespace Lightning2
             Vector3 auxLightPosition = lightPosition;
 
             int row = 0, column = 0;
-            foreach(KeyValuePair<Material.MaterialName, Material> m in Material.AllMaterials) { 
+            foreach (KeyValuePair<Material.MaterialName, Material> m in Material.AllMaterials)
+            {
                 auxLightPosition = lightPosition;
                 GL.UseProgram(program);
                 {
@@ -144,7 +145,7 @@ namespace Lightning2
                 GL.UseProgram(lightShader);
                 {
                     // Matrix data
-                    Matrix4 lightModel = Matrix4.CreateScale(0.2f) *  Matrix4.CreateTranslation(auxLightPosition);
+                    Matrix4 lightModel = Matrix4.CreateScale(0.2f) * Matrix4.CreateTranslation(auxLightPosition);
                     GL.UniformMatrix4(GL.GetUniformLocation(lightShader, "model"), false, ref lightModel);
                     GL.UniformMatrix4(GL.GetUniformLocation(lightShader, "view"), false, ref view);
                     GL.UniformMatrix4(GL.GetUniformLocation(lightShader, "projection"), false, ref projection);
@@ -153,7 +154,7 @@ namespace Lightning2
                 }
 
                 ++column;
-                if(column == 5)
+                if (column == 5)
                 {
                     ++row;
                     column = 0;
@@ -184,7 +185,7 @@ namespace Lightning2
                 lightPosition.Y += 0.05f;
             if (state.IsKeyDown(Key.O))
                 lightPosition.Y -= 0.05f;
-            
+
         }
 
 

@@ -4,13 +4,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0BCC469A-FBB7-45D7-A139-3F8BA46B030D}</ProjectGuid>
+    <ProjectGuid>{327F3DFC-EFD2-47E5-B676-D9CC9B5F4C92}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Lightning2</RootNamespace>
-    <AssemblyName>Lightning2</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <RootNamespace>SpecularAndDiffuseMapping</RootNamespace>
+    <AssemblyName>SpecularAndDiffuseMapping</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -37,7 +36,6 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -53,10 +51,6 @@
     <None Include="App.config" />
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
-    <None Include="Shaders\cube.fs" />
-    <None Include="Shaders\cube.vs" />
-    <None Include="Shaders\lamp.fs" />
-    <None Include="Shaders\lamp.vs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\GraphicUtils\GraphicUtils.csproj">
