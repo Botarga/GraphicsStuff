@@ -8,7 +8,7 @@ using GraphicUtils;
 using System.Drawing;
 using System.Drawing.Imaging;
 
-namespace SpecularAndDiffuseMapping
+namespace LightCasters
 {
     class MyGame : GameWindow
     {
@@ -57,11 +57,24 @@ namespace SpecularAndDiffuseMapping
             -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 1.0f
         };
 
+        Vector3[] cubePositions = new Vector3[] {
+            new Vector3( 0.0f,  0.0f,  0.0f),
+            new Vector3( 2.0f,  5.0f, -15.0f),
+            new Vector3(-1.5f, -2.2f, -2.5f),
+            new Vector3(-3.8f, -2.0f, -12.3f),
+            new Vector3( 2.4f, -0.4f, -3.5f),
+            new Vector3(-1.7f,  3.0f, -7.5f),
+            new Vector3( 1.3f, -2.0f, -2.5f),
+            new Vector3( 1.5f,  2.0f, -2.5f),
+            new Vector3( 1.5f,  0.2f, -1.5f),
+            new Vector3(-1.3f,  1.0f, -1.5f)
+        };
+
         int VAO, VBO;
         double deltaTime;
         Vector3 cubeColor = new Vector3(1.0f, 0.0f, 0.0f);
         Vector3 lightColor = new Vector3(1.0f, 1.0f, 1.0f);
-        Vector3 lightPosition = new Vector3(0.0f, 0.0f, 2.0f);
+        Vector3 lightDirection = new Vector3(-0.2f, -1.0f, -0.3f);
 
         Random gen = new Random();
         Camera cam = new Camera();
@@ -99,37 +112,31 @@ namespace SpecularAndDiffuseMapping
             GL.BindVertexArray(VAO);
             GL.UseProgram(program);
             {
-                model = Matrix4.Identity;
-                view = cam.GetViewMatrix();
-                projection = cam.GetProjectionMatrix();
+                for (int i = 0; i < cubePositions.Length; ++i)
+                {
+                    float angle = 20.0f * i;
+                    model = Matrix4.CreateFromAxisAngle(new Vector3(1.0f, 0.3f, 0.5f), angle) * Matrix4.CreateTranslation(cubePositions[i]);
+                    view = cam.GetViewMatrix();
+                    projection = cam.GetProjectionMatrix();
 
-                // Matrix dat
-                GL.UniformMatrix4(GL.GetUniformLocation(program, "model"), false, ref model);
-                GL.UniformMatrix4(GL.GetUniformLocation(program, "view"), false, ref view);
-                GL.UniformMatrix4(GL.GetUniformLocation(program, "projection"), false, ref projection);
-                GL.Uniform3(GL.GetUniformLocation(program, "viewPos"), cam.Position);
+                    // Matrix dat
+                    GL.UniformMatrix4(GL.GetUniformLocation(program, "model"), false, ref model);
+                    GL.UniformMatrix4(GL.GetUniformLocation(program, "view"), false, ref view);
+                    GL.UniformMatrix4(GL.GetUniformLocation(program, "projection"), false, ref projection);
+                    GL.Uniform3(GL.GetUniformLocation(program, "viewPos"), cam.Position);
 
-                GL.Uniform3(GL.GetUniformLocation(program, "light.position"), lightPosition);
-                GL.Uniform3(GL.GetUniformLocation(program, "light.ambient"), new Vector3(0.2f));
-                GL.Uniform3(GL.GetUniformLocation(program, "light.diffuse"), new Vector3(0.5f));
-                GL.Uniform3(GL.GetUniformLocation(program, "light.specular"), new Vector3(1.0f));
+                    GL.Uniform3(GL.GetUniformLocation(program, "light.direction"), lightDirection);
+                    GL.Uniform3(GL.GetUniformLocation(program, "light.ambient"), new Vector3(0.2f));
+                    GL.Uniform3(GL.GetUniformLocation(program, "light.diffuse"), new Vector3(0.5f));
+                    GL.Uniform3(GL.GetUniformLocation(program, "light.specular"), new Vector3(1.0f));
 
-                GL.Uniform3(GL.GetUniformLocation(program, "material.specular"), new Vector3(0.5f));
-                GL.Uniform1(GL.GetUniformLocation(program, "material.shininess"), 32.0f);
+                    GL.Uniform3(GL.GetUniformLocation(program, "material.specular"), new Vector3(0.5f));
+                    GL.Uniform1(GL.GetUniformLocation(program, "material.shininess"), 32.0f);
 
-                GL.DrawArrays(PrimitiveType.Triangles, 0, 36);
-
+                    GL.DrawArrays(PrimitiveType.Triangles, 0, 36);
+                }
             }
-            GL.UseProgram(lightShader);
-            {
-                model = Matrix4.CreateScale(0.2f) * Matrix4.CreateTranslation(lightPosition);
-                GL.UniformMatrix4(GL.GetUniformLocation(lightShader, "model"), false, ref model);
-                GL.UniformMatrix4(GL.GetUniformLocation(lightShader, "view"), false, ref view);
-                GL.UniformMatrix4(GL.GetUniformLocation(lightShader, "projection"), false, ref projection);
-
-
-                GL.DrawArrays(PrimitiveType.Triangles, 0, 36);
-            }
+           
             SwapBuffers();
         }
 
@@ -169,17 +176,17 @@ namespace SpecularAndDiffuseMapping
                 Environment.Exit(0);
 
             if (state.IsKeyDown(Key.I))
-                lightPosition.Z -= 0.05f;
+                lightDirection.Z -= 0.05f;
             if (state.IsKeyDown(Key.K))
-                lightPosition.Z += 0.05f;
+                lightDirection.Z += 0.05f;
             if (state.IsKeyDown(Key.J))
-                lightPosition.X -= 0.05f;
+                lightDirection.X -= 0.05f;
             if (state.IsKeyDown(Key.L))
-                lightPosition.X += 0.05f;
+                lightDirection.X += 0.05f;
             if (state.IsKeyDown(Key.U))
-                lightPosition.Y += 0.05f;
+                lightDirection.Y += 0.05f;
             if (state.IsKeyDown(Key.O))
-                lightPosition.Y -= 0.05f;
+                lightDirection.Y -= 0.05f;
 
         }
 
@@ -272,7 +279,7 @@ namespace SpecularAndDiffuseMapping
                 GL.DeleteShader(id);
             }
 
-            
+
             return result;
         }
 
